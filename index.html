@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Be My Valentine 💖</title>
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #ffd1dc, #ffe6f0);
+  font-family: 'Segoe UI', sans-serif;
+  overflow: hidden;
+}
+
+.card {
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  text-align: center;
+  width: 340px;
+  position: relative;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  z-index: 2;
+}
+
+h1 {
+  color: #e60073;
+}
+
+.buttons {
+  margin-top: 25px;
+}
+
+button {
+  padding: 12px 22px;
+  border-radius: 25px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#yes {
+  background: #ff4d88;
+  color: white;
+}
+
+#no {
+  background: #ddd;
+  position: absolute;
+}
+
+.message {
+  display: none;
+  margin-top: 20px;
+  color: #e60073;
+  font-weight: bold;
+}
+
+/* ❤️ HEART ANIMATION */
+.heart {
+  position: fixed;
+  font-size: 20px;
+  animation: float 2s ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes float {
+  0% {
+    transform: translate(0,0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--x), var(--y)) scale(1.5);
+    opacity: 0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="card" id="card">
+  <h1>Parambrata Da❤️</h1>
+  <h2>Will you be my Valentine? 💘</h2>
+
+  <div class="buttons">
+    <button id="yes" onclick="yesClicked()">Yes 💖</button>
+    <button id="no" onmouseover="moveNo()">No 😐</button>
+  </div>
+
+  <div class="message" id="msg">
+    Yayyy! 💕 Every moment with you feels like a dream come true ✨
+  </div>
+</div>
+
+<script>
+/* NO BUTTON TEXT + MOVE */
+const noTexts = [
+  "No 😐",
+  "Are you sure? 🥺",
+  "Think again 😢",
+  "Pleaseee 😭",
+  "You can't say no 😈"
+];
+let index = 0;
+
+function moveNo() {
+  const noBtn = document.getElementById("no");
+  const card = document.getElementById("card");
+
+  index = (index + 1) % noTexts.length;
+  noBtn.innerText = noTexts[index];
+
+  const rect = card.getBoundingClientRect();
+  const maxX = rect.width - noBtn.offsetWidth - 20;
+  const maxY = rect.height - noBtn.offsetHeight - 20;
+
+  noBtn.style.left = Math.random() * maxX + "px";
+  noBtn.style.top = Math.random() * maxY + "px";
+}
+
+/* 💖 HEART BURST */
+function yesClicked() {
+  document.getElementById("msg").style.display = "block";
+
+  for (let i = 0; i < 25; i++) {
+    createHeart();
+  }
+}
+
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerText = "❤️";
+
+  heart.style.left = window.innerWidth / 2 + "px";
+  heart.style.top = window.innerHeight / 2 + "px";
+
+  heart.style.setProperty("--x", (Math.random() * 400 - 200) + "px");
+  heart.style.setProperty("--y", (Math.random() * -400) + "px");
+
+  document.body.appendChild(heart);
+
+  setTimeout(() => heart.remove(), 2000);
+}
+</script>
+
+</body>
+</html>
